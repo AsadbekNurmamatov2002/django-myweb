@@ -8,10 +8,10 @@ environ.Env.read_env()
 BASE_DIR = Path(__file__).resolve().parent.parent
 # DEBUG =False
 SECRET_KEY =os.environ.get("SECRET_KEY")
-# DEBUG = os.environ.get('DEBUG', '0').lower() in ['true', 't', '1']
-DEBUG =True
-ALLOWED_HOSTS = []
-# ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["*"])
+DEBUG = os.environ.get('DEBUG', '0').lower() in ['true', 't', '1']
+#DEBUG =True
+#ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env.list("https://talabauzfi.onrender.com", default=["*"])
 
 SITE_ID=1
 INSTALLED_APPS = [

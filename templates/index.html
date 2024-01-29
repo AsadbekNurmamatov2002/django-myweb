@@ -1,0 +1,433 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}
+    Home
+{% endblock title %}
+    
+
+
+{% block content %}
+    <style>
+        #nav-image{
+            width:100%;
+            height:452px;
+        }
+        #nav-image-main{
+            width:100%;
+            height:224px;
+        }
+        @media only screen and (max-width: 600px) {
+            #nav-image{
+                width:100%;
+                height:250px;
+            }
+            #nav-image-main{
+                width:100%;
+                height:300px;
+                
+            }
+          }
+          
+    </style>
+    
+    {% if posts.ENG_SARA %}
+    <section class="container">
+        <div class="bg-body box-layout">
+            <div class="row no-gutters d-flex align-items-center">
+                <div class="col-lg-2 col-md-3 col-sm-4 col-5">
+                    <div class="topic-box mt-4 mb-5">ENG SARA</div>
+                </div>
+                <div class="col-lg-10 col-md-9 col-sm-8 col-7">
+                    <div class="feeding-text-dark2">
+                        <ol id="sample" class="ticker">
+
+                            
+                            {% for eng_sara in posts.ENG_SARA %}
+                                <li>
+                                    <a href="{{eng_sara.get_absolute_url}}">{{ eng_sara.title|truncatewords:40|linebreaks}}</a>
+                                </li>
+                                
+                            {% endfor %}
+                                
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    <!-- News Feed Area End Here -->
+    <!-- News Slider Area Start Here -->
+    <section class="container">
+        <div class="bg-body box-layout">
+            <div class="section-space-bottom-less4">
+                <div class="row tab-space2">
+                    <div class="col-lg-5 col-md-12" >
+                        
+                        {% for pos in posts.SUNGI|slice:":1" %}
+                            
+                            <div class="img-overlay-70 img-scale-animate mb-4"id='nav-image'>
+                                <img src="{{pos.image.url}}" alt="news" class="img-fluid width-100">
+                                <div class="mask-content-lg">
+                                    <div class="topic-box-sm color-cod-gray mb-20">{{pos.categorey.name}}</div>
+                                    <div class="post-date-light">
+                                        <ul>
+                                            <li>
+                {% comment %} .............................add url............... {% endcomment %}
+                                               <a href="{{ pos.get_absolute_url }}">
+                                                  <span>{{pos.auther.first_name}}</span>
+                                                   {{pos.author.last_name }}
+                                                 </a>
+                                            </li>
+                                            <li>
+                                                <span>
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </span>{{pos.publish}}</li>
+                                        </ul>
+                                    </div>
+                                    <h1 class="title-medium-light">
+                                        <a href="{{pos.get_absolute_url}}">{{ pos.title }}</a>
+                                    </h1>
+                                </div>
+                            </div>
+                        {% endfor %} 
+                            
+                    </div>
+                    <div class="col-lg-7 col-md-12">
+                        <div class="row tab-space2">
+                            
+                            {% for eng_sungi in posts.ENG_SARA %}
+                                <div class="col-sm-6 col-12">
+                                    <div class="img-overlay-70 img-scale-animate mb-4" id="nav-image-main">
+                                        <div class="mask-content-sm">
+                                            <div class="topic-box-sm color-cod-gray mb-10">{{eng_sungi.categorey.name}}</div>
+                                            <h3 class="title-medium-light">
+                                                <a href="{{ eng_sungi.get_absolute_url }}">{{eng_sungi.title}}</a>
+                                            </h3>
+                                        </div>
+                                        <img src="{{eng_sungi.image.url}}" alt="news" class="img-fluid width-100">
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- News Slider Area End Here -->
+    <!-- Popular News Area Start Here -->
+    <section class="container">
+        <div class="bg-body box-layout">
+            <div class="section-space-bottom-less30">
+                <div class="row">
+                    <div class="col-lg-8 col-md-12">
+                        <!-- MaShhur Postlar post-->
+                                <div class="mb-20-r ne-isotope">
+                                    
+                                    <div class="topic-border color-azure-radiance mb-30">
+        
+                                        <div class="topic-box-lg color-azure-radiance">Mashhur Yangiliklar</div>
+                                        <div class="isotope-classes-tab isotop-btn" style='margin:0px 15px 0px 0px; '>
+                                            
+                                            {% for cate in posts.Mashhur_Yangiliklar.categorey.all|slice:":4"%}
+                                            <a href="{{request.path }}?q={{cate.slug}}" class="current">{{cate.name}}</a>
+                                            {% endfor %}
+                                            
+                                        </div>
+                                        <div class="more-info-link">
+                                            <a href="{% url 'myapp:post_list' %}">Hammasi
+                                                <i class="fa fa-angle-right" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="featuredContainer">
+                                        <div class="row football">
+                                            <div class="col-md-6 col-sm-12">
+                                                
+                                                
+                                                {% for eng_mash in posts.Mashhur_Yangiliklar|slice:":1" %}
+                                                    <div class="mb-30"  style='height:450px' >
+                                                        <div class="img-scale-animate mb-20" style='width:250px; height:300px margin-bottom: 15px;'>
+                                                            <a href="{{eng_mash.get_absolute_url}}">
+                                                                <img src="{{ eng_mash.image.url }}" style='width:100%; height:100%'  alt="news" class="img-fluid width-100">
+                                                            </a>
+                                                            <div class="topic-box-top-sm">
+                                                                <div class="topic-box-sm color-cod-gray mb-20">{{eng_mash.categorey.name}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="post-date-dark">
+                                                            <ul>
+                                                                <li>
+                                                                    <span>{{eng_mash.auther.first_name}}</span>
+                                                                    <a href="{{eng_mash.get_absolute_url}}">{{eng_mash.auther.last_name}}</a>
+                                                                </li>
+                                                                <li>
+                                                                    <span>
+                                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                                    </span>{{eng_mash.publish}}</li>
+                                                            </ul>
+                                                        </div>
+                                                        <h3 class="title-semibold-dark size-lg mb-15">
+                                                            <a href="{{eng_mash.get_absolute_url}}">{{eng_mash.title}}</a>
+                                                        </h3>
+                                                        <p>
+                                                            {{ eng_mash.body|safe|truncatewords:15|linebreaks}}
+                                                        </p>
+                                                    </div>
+                                                {% endfor %}
+                                                    
+                                                
+                                                {% for post_eng in posts.Mashhur_Yangiliklar|slice:":4" %}
+                                                <div class="media mb-30">
+                                                    <a class="img-opacity-hover" href="{{post_eng.get_absolute_url}}"  style='width:70px; height:70px'>
+                                                        <img src="{{post_eng.image.url}}" style='width:100%; height:100%' alt="news" class="img-fluid">
+                                                    </a>
+                                                    <div class="media-body">
+                                                        <div class="post-date-dark">
+                                                            <ul>
+                                                                <li>
+                                                                    <span>
+                                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                                    </span>{{post_eng.publish}}</li>
+                                                            </ul>
+                                                        </div>
+                                                        <h3 class="title-medium-dark size-md mb-none">
+                                                            <a href="{{post_eng.get_absolute_url}}">{{post_eng.title}}.</a>
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                                    
+                                            </div>
+                                            <div class="col-md-6 col-sm-12">
+                                                
+                                                {% for eng in posts.SUNGI|slice:":1" %}
+                                                    <div class="mb-30" style='height:450px'>
+                                                        <div class="img-scale-animate mb-20" style='width:250px; height:300px margin-bottom: 15px;' >
+                                                            <a href="{{eng.get_absolute_url}}">
+                                                                <img src="{{eng.image.url}}" style='width:100%; height:100%' alt="news" class="img-fluid width-100">
+                                                            </a>
+                                                            <div class="topic-box-top-sm">
+                                                                <div class="topic-box-sm color-cod-gray mb-20">{{ eng.categorey.name}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="post-date-dark">
+                                                            <ul>
+                                                                <li>
+                                                                    <span>by</span>
+                                                                    <a href="{{eng.get_absolute_url}}">{{eng.auther.first_name}}</a>
+                                                                </li>
+                                                                <li>
+                                                                    <span>
+                                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                                    </span>{{eng.publish}}</li>
+                                                            </ul>
+                                                        </div>
+                                                        <h3 class="title-semibold-dark size-lg mb-15">
+                                                            <a href="{{eng.get_absolute_url}}">{{eng.title}}</a>
+                                                        </h3>
+                                                        <p>
+                                                            {{ eng.body|safe|truncatewords:15| linebreaks}}
+                                                        </p>
+                                                    </div>
+        
+                                                {% endfor %}
+                                                {% for post_eng in posts.OXIRGI|slice:":4" %}
+                                                <div class="media mb-30">
+                                                    <a class="img-opacity-hover" href="{{post_eng.get_absolute_url}}" style='width:90px; height:90px'>
+                                                        <img src="{{post_eng.image.url}}" style='width:100%; height:100%'  alt="news" class="img-fluid">
+                                                    </a>
+                                                    <div class="media-body">
+                                                        <div class="post-date-dark">
+                                                            <ul>
+                                                                <li>
+                                                                    <span>
+                                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                                    </span>{{post_eng.publish}}</li>
+                                                            </ul>
+                                                        </div>
+                                                        <h3 class="title-medium-dark size-md mb-none">
+                                                            <a href="{{post_eng.get_absolute_url}}">{{post_eng.title}}.</a>
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                                
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            
+                                
+                            
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="topic-border color-apple mb-30 width-100">
+                                    <div class="topic-box-lg color-apple">Fan va Texnalogiya</div>
+                                </div>
+                            </div>
+                            
+                            {% for p in posts.FAN_TEXNIKA|slice:":4"  %}
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="img-overlay-70 img-scale-animate mb-30">
+                                    <div class="mask-content-xs">
+                                        <div class="post-date-light d-none d-sm-block">
+                                            <ul>
+                                                <li>
+                                                    <span>
+                                                      <a href="{{p.get_absolute_url}}">{{p.author.lase_name}}</a>
+                                                     </span>
+                                                </li>
+                                                <li>
+                                                    <span>
+                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    </span>{{p.publish}}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <h3 class="title-medium-light">
+                                            <a href="{{p.get_absolute_url}}">{{p.title|truncatewords:15|linebreaks}} </a>
+                                        </h3>
+                                    </div>
+                                    <img src="{{p.image.url}}" alt="news" class="img-fluid width-100">
+                                    <div class="topic-box-top-sm">
+                                        <div class="topic-box-sm color-cod-gray mb-20">
+                                            
+                                            {% for tag in p.tag.all %}
+                                                {{tag.name}}
+                                            {% endfor %}
+                                                
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!--sidebar -->
+                    {% include 'sidbar.html' %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Popular News Area End Here -->
+
+    <!-- Latest Article Area Start Here -->
+    <section class="container">
+        <div class="bg-body box-layout">
+            <div class="section-space-less30">
+                <div class="row">
+                    <div class="col-lg-8 col-md-12">
+                        <div class="topic-border color-scampi mb-30">
+                            <div class="topic-box-lg color-scampi">Oxirgi Maqola</div>
+                        </div>
+                        <div class="row">
+                            
+                            {% for post in posts.OXIRGI %}                            
+                            <div class="col-xl-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="media media-none--lg mb-30">
+                                    <div class="position-relative width-40">
+                                        <a href="{{post.get_absolute_url}}" class="img-opacity-hover">
+                                            <img src="{{ post.image.url }}" alt="news" class="img-fluid">
+                                        </a>
+                                        <div class="topic-box-top-xs">
+                                            <div class="topic-box-sm color-cod-gray mb-20">{{post.categorey.name}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="media-body p-mb-none-child media-margin30">
+                                        <div class="post-date-dark">
+                                            <ul>
+                                                <li>
+                                                    <span></span>
+                                                    <a >{{post.auther.last_name}}</a>
+                                                </li>
+                                                <li>
+                                                    <span>
+                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    </span>{{post.publish}}</li>
+                                            </ul>
+                                        </div>
+                                        <h3 class="title-semibold-dark size-lg mb-15">
+                                            <a href="{{post.get_absolute_url}}">{{post.title}}</a>
+                                        </h3>
+                                        <p>
+                                            {{ post.body|safe|truncatewords:25|linebreaks}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}              
+                        </div>
+                    </div>
+                    <div class="ne-sidebar sidebar-break-md col-lg-4 col-md-12">
+                        <div class="sidebar-box">
+                            <div class="topic-border color-cod-gray mb-30">
+                                <div class="topic-box-lg color-cod-gray">Categories</div>
+                            </div>
+                            <ul class="archive-list">
+                                
+                                {% for Categories in categorey %}
+                                <li>
+                                    <a href="#">{{Categories.name}}
+                                        <span> ({{Categories.post_set.all.count}})</span>
+                                    </a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="sidebar-box">
+                            <div class="ne-banner-layout1 text-center">
+                                
+                                {% for reclama in reclama_context|slice:":1" %}
+                                    <a href="{{reclama.manzil}}">
+                                        <img src="{{reclama.image.url}}" alt="ad" class="img-fluid">
+                                    </a>
+                                {% endfor %}
+                                    
+                            </div>
+                        </div>
+                        <!--Sharhlar-->
+                        <div class="sidebar-box">
+                            <div class="topic-border color-cod-gray mb-30">
+                                <div class="topic-box-lg color-cod-gray"> Sharhlar</div>
+                            </div>
+                            <div class="add-item5-lg">
+
+                                
+                                {% for message in messages %}
+                                    <div class="media bg-body item-shadow-gray mb30-list">
+                                        <a class="" href="{{message.post.get_absolute_url }}">
+                                            {{message.user.first_name}}
+                                        </a>
+                                        <div class="media-body">
+                                            <div class="post-date-dark">
+                                                <ul>
+                                                    <li>
+                                                        <span>
+                                                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                        </span>{{message.created}}
+                                                        <h3>{{message.user.last_name}} </h3>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <h3 class="title-medium-dark mb-none">
+                                                <a href="{{message.post.get_absolute_url }}">{{message.body|safe|truncatewords:20|linebreaks }}</a>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                    
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+  
+{% endblock content %}
+    

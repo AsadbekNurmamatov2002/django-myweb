@@ -1,0 +1,82 @@
+<div class="ne-sidebar sidebar-break-md col-lg-4 col-md-12">
+    <!--Obunachilar -->
+    <div class="sidebar-box">
+        
+            <div class="topic-border color-cod-gray mb-30">
+                <div class="topic-box-lg color-cod-gray">Aloqada Qoling</div>
+            </div>
+            <ul class="stay-connected mb-40 overflow-hidden">
+                
+                {% for boglanish in boglanish_context %}
+                    <li class="facebook">
+                        <i class="{{boglanish.icons}}" aria-hidden="true"></i>
+                        
+                        {% if boglanish.soni %}
+                            <div class="connection-quantity">{{boglanish.soni}}</div>
+                        {% endif %}
+                        
+                    </li>
+                {% endfor %}
+                    
+                
+            </ul>
+    </div>
+    <!-- recklama -->
+    
+    {% if reclama_context %}
+        <div class="sidebar-box">
+            <div class="ne-banner-layout1 text-center">
+                
+                {% for reclama in reclama_context|slice:":1" %}
+                    <a href="{{reclama.manzil}}">
+                        <img src="{{reclama.image.url}}" alt="ad" class="img-fluid">
+                    </a>
+                {% endfor %}
+                    
+            </div>
+        </div>
+    {% endif %}
+        
+    
+    
+        <div class="sidebar-box">
+            <div class="topic-border color-cod-gray mb-30">
+                <div class="topic-box-lg color-cod-gray">So'nggi Yangiliklar</div>
+            </div>
+            {% for post in posts.SUNGI|slice:':1' %}
+            <div class="img-overlay-70 img-scale-animate">
+                <img src="{{post.image.url}}" alt="news" class="img-fluid width-100">
+                <div class="topic-box-top-sm">
+                    <div class="topic-box-sm color-cod-gray mb-20">{{post.categorey.name}}</div>
+                </div>
+                <div class="mask-content-xs">
+                    <div class="post-date-light">{{post.publish}}</div>
+                    <h2 class="title-medium-light size-lg">
+                        <a href="{{post.get_absolute_url}}">{{post.title}}</a>
+                    </h2>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="row">
+                <!--sidebar 4 talik -->
+                    {% for post in posts.SUNGI|slice:':4' %}
+                        <div class="col-6">
+                            <div class="mt-30">
+                                <div class="position-relative">
+                                    <a href="{{post.get_absolute_url}}" class="img-opacity-hover mb-10">
+                                        <img src="{{ post.image.url }}" alt="ad" class="img-fluid">
+                                    </a>
+                                    <div class="topic-box-top-xs">
+                                        <div class="topic-box-sm color-cod-gray mb-20">{{post.categorey.name}}</div>
+                                    </div>
+                                </div>
+                                <h3 class="title-medium-dark size-md mb-none">
+                                    <a href="{{post.get_absolute_url}}">{{post.title|truncatewords:100|linebreaks}}</a>
+                                </h3>
+                            </div>
+                        </div>
+                    {% endfor %}
+            </div>
+        </div>
+        
+</div>

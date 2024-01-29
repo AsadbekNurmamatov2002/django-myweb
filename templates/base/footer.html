@@ -1,0 +1,172 @@
+<footer>
+    <div class="footer-area-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="footer-box">
+                        {% if posts %}
+                        <h2 class="title-bold-light title-bar-left text-uppercase">ENG YAXSHI XABARLAR</h2>
+                        <ul class="most-view-post">
+                                {% for post in posts|slice:":4" %}
+                                    <li>
+                                        <div class="media">
+                                            <a href="{{post.get_absolute_url}}">
+                                                <img src="{{post.image.url}}" style="width:60px; height:60px;" alt="post" class="img-fluid">
+                                            </a>
+                                            <div class="media-body">
+                                                <h3 class="title-medium-light size-md mb-10">
+                                                    <a href="{{post.get_absolute_url}}">{{post.title}}</a>
+                                                </h3>
+                                                <div class="post-date-light">
+                                                    <ul>
+                                                        <li>
+                                                            <span>
+                                                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                            </span>{{post.publish}}</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                             </ul>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-3 col-md-6 col-sm-12">
+                    
+                    {% if mcatigorey_context %}
+                        <div class="footer-box">
+                            <h2 class="title-bold-light title-bar-left text-uppercase">OMMABOP TOIFALAR</h2>
+                            <ul class="popular-categories">
+                                {% for catigorey_context in mcatigorey_context %}
+                                        {% for catigorey in catigorey_context.categorey_set.all|slice:":1" %}
+                                            <li>
+                                                <a href="{% url 'myapp:post_list'%}?q={{catigorey.slug}}">{{catigorey.name}}
+                                                    <span>{{catigorey.post_set.all.count}}</span>
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                        
+                </div>
+                <div class="col-xl-4 col-lg-5 col-md-12 col-sm-12">
+                    <div class="footer-box">
+                        {% if posts %}
+                        <h2 class="title-bold-light title-bar-left text-uppercase">YANGILIKLAR GALEREYASI</h2>
+                        <ul class="post-gallery shine-hover ">
+                                {% for post in posts|slice:":16" %}
+                                    <li>
+                                        <a href="{{post.get_absolute_url}}">
+                                            <figure>
+                                                <img src="{{post.image.url}}" style="widt:50; height:50px;" alt="post" class="img-fluid">
+                                            </figure>
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-area-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    
+                    {% for nav in navbar|slice:":1" %}
+                        <a href="{% url 'myapp:home'%}" class="footer-logo img-fluid">
+                            <h3 style="font-family:{{nav.fonts}};font-size:{{nav.size}}px; color:#fff;">{{nav.logo}}</h3>
+                        </a>
+                    {% endfor %}
+                        
+                    <ul class="footer-social">
+                        
+                        {% for boglanish in boglanish_context %}
+                            <li>
+                                <a href="{{boglanish.manzil}}" title="facebook">
+                                    <i class="{{boglanish.icons}}" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                        {% endfor %}
+                            
+                        
+                    </ul>
+                    
+                    {% for foot in navbar|slice:":1" %}
+                        <p style="font-family:{{nav.fonts}};font-size:18px;">{{foot.footer}}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Modal End-->
+<!-- Offcanvas Menu Start -->
+<div id="offcanvas-body-wrapper" class="offcanvas-body-wrapper">
+    <div id="offcanvas-nav-close" class="offcanvas-nav-close offcanvas-menu-btn">
+        <a href="#" class="menu-times re-point">
+            <span></span>
+            <span></span>
+        </a>
+    </div> 
+    <div class="offcanvas-main-body">
+        <ul id="accordion" class="offcanvas-nav panel-group">
+            <li class="panel panel-default">
+                <div class="panel-heading">
+                    <a aria-expanded="false" href="{% url 'myapp:home' %}" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                        <i class="fa fa-home" aria-hidden="true"></i>Bosh sahifa</a>
+                </div>
+                
+            </li>
+            <li>
+            
+                    {% if request.user.is_authenticated %}
+                    <a href="{% url 'myapp:logout' %}" class="login-btn">
+                        <i class="fa fa-user" aria-hidden="true"></i>Chiqish
+                    </a>
+                    {% else %}
+                    <a href="{% url 'myapp:login' %}" class="login-btn" >
+                        <i class="fa fa-user" aria-hidden="true"></i>Kirish
+                    </a>
+                    {% endif %}
+                </li>
+                
+            </li>
+            
+           
+           {% for catigorey in mcatigorey_context %}
+             <li class="panel panel-default">
+                 <div class="panel-heading">
+                     <a aria-expanded="false" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+                     {{catigorey.name}}
+                    </a>
+                 </div>
+                 <div aria-expanded="false" id="collapseFour" role="tabpanel" class="panel-collapse collapse">
+                     <div class="panel-body">
+                         <ul class="offcanvas-sub-nav">
+                             
+                             {% for cate in catigorey.categorey_set.all %}
+                                <li>
+                                    <a href="{% url 'myapp:post_list' %}?q={{cate.slug}}">{{cate.name}}</a>
+                                </li>
+                             {% endfor %}
+                             
+                         </ul>
+                     </div>
+                 </div>
+             </li>
+           {% endfor %}
+            
+            
+            
+        </ul>
+    </div>
+</div>
+
+<!-- Offcanvas Menu End -->

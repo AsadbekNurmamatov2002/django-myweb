@@ -1,0 +1,162 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+    Post Details
+{% endblock title %}
+    
+{% block content %}
+
+<style>
+    #forms{
+        width:100%%;
+    }
+</style>
+
+
+<!-- Breadcrumb Area End Here -->
+<!-- News Details Page Area Start Here -->
+<section class="bg-body section-space-less30" style="margin:50px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-12 mb-30">
+                <div class="news-details-layout1">
+                    <div class="position-relative mb-30">
+                        <img src="{{post.image.url}}" alt="news-details" class="img-fluid">
+                        <div class="topic-box-top-sm">
+                            <div class="topic-box-sm color-cinnabar mb-20">{{post.categorey.name}}</div>
+                        </div>
+                    </div>
+                    <h2 class="title-semibold-dark size-c30">{{post.title}}</h2>
+                    <ul class="post-info-dark mb-30">
+                        <li>
+                            <a >
+                                <span>{{ post.author.first_name}}</span> 
+                                {{post.auther.last_name}}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-calendar" aria-hidden="true"></i>{{post.publish}}</a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-comments" aria-hidden="true"></i>{{ post.message_set.all.count}}</a>
+                        </li>
+                    </ul>
+                    <p>{{post.body|safe}}</p>
+                    <ul class="blog-tags item-inline">
+                        {% if post.tag %}
+                        
+                        {% for tag in post.tag.all %}
+                            <li>
+                                <a href="{{ tag.name }}">{{ tag.name }}</a>
+                            </li>
+                        {% endfor %}
+                            
+                        {% endif %}
+                    </ul>
+                    <div class="post-share-area mb-40 item-shadow-1">
+                        <p>Siz ushbu postni baham ko'rishingiz mumkin!</p>
+                        <ul class="social-default item-inline">
+                            
+                            {% for boglanish in boglanish_context %}
+                                <li>
+                                    <a href="{{boglanish.manzil}}" class="facebook">
+                                        <i class="{{boglanish.icons}}" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                                
+                        </ul>
+                    </div>
+                    
+                    
+                    <!--<div class="author-info p-35-r mb-50 border-all">
+                        <div class="media media-none-xs">
+                            <img src="img/author.jpg" alt="author" class="img-fluid rounded-circle">
+                            <div class="media-body pt-10 media-margin30">
+                                <h3 class="size-lg mb-5">Mark Willy</h3>
+                                <div class="post-by mb-5">By Admin</div>
+                                <p class="mb-15">Dorem Ipsum is simply dummy text of the printing and typesetting industr been
+                                    the industry's standard dummy text ever since.</p>
+                                <ul class="author-social-style2 item-inline">
+                                    <li>
+                                        <a href="#" title="facebook">
+                                            <i class="fa fa-facebook" aria-hidden="true"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title="twitter">
+                                            <i class="fa fa-twitter" aria-hidden="true"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title="google-plus">
+                                            <i class="fa fa-google-plus" aria-hidden="true"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title="linkedin">
+                                            <i class="fa fa-linkedin" aria-hidden="true"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title="pinterest">
+                                            <i class="fa fa-pinterest" aria-hidden="true"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                -->
+                    <div class="comments-area">
+                        <h2 class="title-semibold-dark size-xl border-bottom mb-40 pb-20">Izohlar {{post.message_set.all.count}}</h2>
+                        <ul>
+                            {% for message in messages %}
+                                <li>
+                                    <div class="media media-none-xs">
+                                        <div class="media-body comments-content media-margin30">
+                                            <h3 class="title-semibold-dark">
+                                                <a>{{message.user.last_name}} <span> {{message.first_name}}</span> 
+                                                    <span> {{message.updated|timesince}} oldin</span>
+                                                </a>
+                                            </h3>
+                                            <p>{{message.body|safe}}</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                                
+                            
+                        </ul>
+                    </div>
+                    <div class="leave-comments">
+                        <h2 class="title-semibold-dark size-xl mb-40">Izohlar Qoldiring</h2>
+                        <form id="leave-comments" method="POST" action="">
+                            {% csrf_token %}
+                            <div class="row">
+                                
+                                <div class="col-md-12 col-sm-12">
+                                    <input style="width:100%; height:40px; border-radius:10px;border:1px solid #ddd;  outline:none;" placeholder='message ...'  type="text" name="body">
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                                
+                                <div class="col-12">
+                                    <div class="form-group mb-none">
+                                        <button type="submit" class="btn-ftg-ptp-45">Izoh Qoldirish</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% include 'sidbar.html' %}
+        </div>
+    </div>
+</section>
+    
+{% endblock content %}
+        
+       

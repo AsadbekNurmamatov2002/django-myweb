@@ -1,0 +1,108 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+    Home
+{% endblock title %}
+    
+
+{% block content %}
+            <section class="bg-body section-space-less30" style="margin-top:30px;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-12">
+                            
+                            {% for post in posts %}
+                                <div class="position-relative mb-50-r">
+                                    <a class="img-opacity-hover" href="{{post.get_absolute_url}}">
+                                        <img src="{{post.image.url}}" alt="news" class="img-fluid width-100 mb-30">
+                                    </a>
+                                    <div class="topic-box-top-lg">
+                                        <div class="topic-box-sm color-cod-gray mb-20">{{post.categorey.name}}</div>
+                                    </div>
+                                    <div class="post-date-dark">
+                                        <ul>
+                                            <li>
+                                                <span>{{post.auther.lase_name}}</span>
+                                                <span>{{post.auther.first_name}}</span>
+                                            </li>
+                                            <li>
+                                                <span>
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </span>{{post.publish}}</li>
+                                        </ul>
+                                    </div>
+                                    <h3 class="title-medium-dark size-c26">
+                                        <a href="{{post.get_absolute_url}}">{{post.title}}</a>
+                                    </h3>
+                                    <p>{{post.body|safe|truncatewords:50|linebreaks}}</p>
+                                    <a href="{{post.get_absolute_url}}" class="btn-ftf-dtp-52">Ko'proq o'qish</a>
+                                </div>
+                            {% endfor %}
+                       
+                           {% if posts %}
+                             <div class="row mb-30">
+                                 <div class="col-sm-6 col-12">
+                                     <div class="pagination-btn-wrapper text-center--xs mb15--xs">
+                                         <ul>
+                                         {% if posts.has_previous %}
+                                         <li>
+                                             <a href="?page={{ posts.previous_page_number }}">«</a>
+                                         </li>
+                                         {% if posts.number > 3 %}
+                                             <li>
+                                                  <a href="?page=1">1</a>
+                                             </li>
+                                          {% endif %}
+                                         {% if posts.number > 4 %}
+                                            <li>
+                                               <span>...</span>
+                                            </li>
+                                         {% endif %}
+                                         {% endif %}
+                   
+                                         {% for num in posts.paginator.page_range %}
+                                            {% if posts.number == num %}
+                                               <li>
+                                                 <a href="?page={{ num }}">{{ num }}</a>
+                                               </li>
+                                            {% elif num > posts.number|add:'-3' and num < posts.number|add:'3' %}
+                                               <li>
+                                                 <a href="?page={{ num }}">{{ num }}</a>
+                                               </li>
+                                            {% endif %}
+                                         {% endfor %}
+                                    
+                                         {% if posts.has_next %}
+                                         {% if posts.number < posts.paginator.num_pages|add:'-3' %}
+                                           <li>
+                                             <span>...</span>
+                                           </li>
+                                           <li>
+                                            <a href="?page={{ posts.paginator.num_pages }}">{{ posts.paginator.num_pages }}</a>
+                                           </li>
+                                         {% elif posts.number < posts.paginator.num_pages|add:'-2' %}
+                                            <li>
+                                            <a href="?page={{ posts.paginator.num_pages }}">{{ posts.paginator.num_pages }}</a>
+                                            </li>
+                                         {% endif %}
+                                             <li>
+                                                 <a href="?page={{ posts.next_page_number }}">»</a>
+                                             </li>
+                                         {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-12">
+                                        <div class="pagination-result text-right pt-10 text-center--xs">
+                                            <p class="mb-none">Sahifa: {{ posts.number }} Sahifalar: {{ posts.paginator.num_pages }}</p>
+                                        </div>
+                                    </div>
+                                 </div>
+                             </div>
+                            
+                           {% endif %}
+                        {% include 'sidbar.html'%}
+                       
+                    </div>
+                </div>
+            </section>
+{% endblock content%}

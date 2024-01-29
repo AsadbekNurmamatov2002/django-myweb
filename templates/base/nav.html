@@ -1,0 +1,158 @@
+<div id="preloader"></div>
+{% load static %}
+<!-- Preloader End Here -->
+<div id="wrapper" class="wrapper">
+<header>
+    <div id="header-layout2" class="header-style5">
+        <div class="header-top-bar">
+            <div class="top-bar-top bg-primarytextcolor box-layout">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-9 col-md-12">  
+                            <ul class="news-info-list text-center--md">
+                                <li>
+                                    <i class="fa fa-map-marker" aria-hidden="true"></i>O'zbekiston</li>
+                                <li>
+                                <li>
+                                    <i class="fa fa-calendar" aria-hidden="true"></i><span id="current_date"></span></li>
+                                <li>
+                                <li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-3 d-none d-lg-block">
+                            <ul class="header-social">
+                                {% if boglanish_context %}
+                                {% for b in boglanish_context %}
+                                    <li>
+                                        <a href="{{b.manzil}}" title="{{b.icons}}">
+                                            <i class="{{b.icons}}" aria-hidden="true"></i>
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                                {% endif %}
+                                    
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="bg-body box-layout">
+                    <div class="top-bar-bottom pt-20 pb-20 d-none d-lg-block">
+                        <div class="row d-flex align-items-center">
+                            <div class="col-lg-4">
+                                <div class="logo-area">
+                                    
+                                    {% for nav in navbar|slice:":1" %}
+                                        <a href="{% url 'myapp:home' %}" class="img-fluid">
+                                           <h1 style="margin: 0px 0px 0px 40px;font-family:{{nav.fonts}};font-size:{{nav.size}}px; color:{{color}}; ">{{nav.logo}}</h1>
+                                        </a>
+                                    {% endfor %}
+                                        
+                                </div>
+                            </div>
+                            <div class="col-lg-8 col-md-12">
+                                <div class="ne-banner-layout1 pull-right">
+                                    
+                                    
+                                    {% if reclama_context %}
+                                       
+                                       {% for recklama in reclama_context|slice:":1" %}
+                                        
+                                         <a href="{{recklama.manzil}}">
+                                             <img src="{{recklama.image.url}}" style='width:300px; height:88px;' alt="ad" class="img-fluid">
+                                         </a>
+                                       {% endfor %}
+                                        
+                                    {% endif %}
+                                        
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main-menu-area" id="sticker">
+            <div class="container">
+                <div class="bg-body box-layout">
+                    <div class="bg-primarytextcolor pl-15 pr-15">
+                        <div class="row no-gutters d-flex align-items-center">
+                            <div class="col-lg-10 col-md-10 d-none d-lg-block position-static min-height-none">
+                                <div class="ne-main-menu">
+                                    <nav id="dropdown">
+                                        <ul>
+                                            <li class="active">
+                                                <a href="{% url 'myapp:home' %}">Bosh Sahifa</a>
+                                            </li>
+                                            
+                                            {% for main in mcatigorey_context %}
+                                            <li>
+                                                <a >{{ main.name }}</a>
+                                                <ul class="ne-dropdown-menu">
+                                                    {% if main.categorey_set.all %}
+                                                    {% for m in  main.categorey_set.all %}
+                                                    <li><a href="{% url 'myapp:post_list' %}?q={{ m.slug }}">{{ m.name }}</a></li>
+                                                    {% endfor %}
+                                                    {% endif %}
+                                                </ul>
+                                            </li>
+                                            <li >
+                                                <a href="{% url 'myapp:post_list' %}">Hammasi</a>
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-4 text-right position-static min-height-none">
+                                <div class="header-action-item on-mobile-fixed">
+                                    <ul>
+                                        <li>
+                                            <!--Search....-->
+                                            <form method="GET" action="{% url 'myapp:post_list'%}" id="top-search-form" class="header-search-light">
+                                                <input name="q" type="text" class="search-input" placeholder="Search...."  style="display: none;">
+                                                    <button class="search-button" style="padding:0px 5px 0px 5px;">
+                                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                                    </button>
+                                                    <button type="Submit" >
+                                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                                    </button>
+                                                
+                                            </form>
+                                        </li>
+                                        <li class="d-none d-sm-block d-md-block d-lg-none">
+                                            {% if request.user.is_authenticated %}
+                                            <a href="{% url 'myapp:logout' %}" class="login-btn">
+                                                <i class="fa fa-user" aria-hidden="true"></i>Chiqish
+                                            </a>
+                                            {% else %}
+                                            <a href="{% url 'myapp:login' %}" class="login-btn" >
+                                                <i class="fa fa-user" aria-hidden="true"></i>Kirish
+                                            </a>
+                                            {% endif %}
+                                        </li>
+                                        <li>
+                                            <div id="side-menu-trigger" class="offcanvas-menu-btn offcanvas-btn-repoint">
+                                                <a href="#" class="menu-bar">
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span></span>
+                                                </a>
+                                                <a href="#" class="menu-times close">
+                                                    <span></span>
+                                                    <span></span>
+                                                </a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

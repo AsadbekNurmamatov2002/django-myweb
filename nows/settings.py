@@ -78,10 +78,16 @@ TEMPLATES = [
     },
 ]
 WSGI_APPLICATION = 'nows.wsgi.application'
-# DATABASE_URL=os.environ.get("DATABASE_URL")
 DATABASES = {
-	"default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
+# DATABASE_URL=os.environ.get("DATABASE_URL")
+#DATABASES = {
+#	"default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
+W}
 # DATABASE_URL=os.environ.get("DATABASE_URL")
 # DATABASES['default']=dj_database_url.parse(DATABASE_URL)
 #"postgres://nowsdb_user:Ja8jHk2vsKQAXXA8HW0AqyV1BBUx06d0@dpg-cmqmtc821fec739ne6pg-a.oregon-postgres.render.com/nowsdb"
